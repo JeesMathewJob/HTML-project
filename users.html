@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Metadata: not shown on the page, but used by the browser and search engines -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Add, edit, delete and manage roles of VoteSphere users.">
+  <meta name="keywords" content="VoteSphere, online polling, voting system, HTML, CSS, JavaScript">
+  <meta name="author" content="Team Ignite - CSE326">
+  <title>User Management | VoteSphere</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="users.css">
+</head>
+<body class="app">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ===== Sidebar navigation (links are hidden by JavaScript if the role may not use them) ===== -->
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="dashboard.html">
+      <img src="assets/favicon.svg" alt="VoteSphere logo" width="34" height="34">
+      <span>VoteSphere</span>
+    </a>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li data-roles="admin creator voter"><a href="dashboard.html">Dashboard</a></li>
+          <li data-roles="admin creator voter"><a href="polls.html">All Polls</a></li>
+          <li data-roles="admin creator"><a href="create-poll.html">Create Poll</a></li>
+          <li data-roles="admin creator voter"><a href="results.html">Results</a></li>
+          <li data-roles="admin"><a href="users.html">User Management</a></li>
+          <li data-roles="admin creator"><a href="reports.html">Reports</a></li>
+          <li><a href="index.html" id="logoutLink">Logout</a></li>
+        </ul>
+      </nav>
+    <p class="sidebar-note"><small>College demo prototype.<br>Not for real elections.</small></p>
+  </aside>
+
+  <!-- ===== Top bar ===== -->
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
+    <span class="crumb">User Management</span>
+    <div class="topbar-user">
+      <span id="userName"></span>
+      <span class="role-badge" id="userRole"></span>
+    </div>
+  </header>
+
+  <!-- ===== Main content of this page ===== -->
+  <main class="content" id="main">
+
+    <header class="page-header">
+      <div>
+        <h1>User Management</h1>
+        <p>Administrators can add users, edit details and change roles.</p>
+      </div>
+      <button class="btn btn-primary" type="button" id="addUserBtn">+ Add User</button>
+    </header>
+
+    <section class="card">
+      <div class="toolbar">
+        <div class="field">
+          <label for="userSearch">Search users</label>
+          <input type="search" id="userSearch" placeholder="Search by name or email">
+        </div>
+        <div class="field">
+          <label for="roleFilter">Filter by role</label>
+          <select id="roleFilter">
+            <option value="all">All roles</option>
+            <option value="admin">Admin</option>
+            <option value="creator">Poll Creator</option>
+            <option value="voter">Voter</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <caption>Registered users</caption>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="userTableBody"></tbody>
+          <tfoot>
+            <tr><td colspan="5" id="userCount"></td></tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- Add / Edit pop-up -->
+    <div class="modal" id="userModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+      <div class="card modal-card">
+        <h2 id="modalTitle">Add User</h2>
+        <form id="userForm" novalidate>
+          <div class="field">
+            <label for="fName">Full name</label>
+            <input type="text" id="fName" maxlength="60">
+            <span class="error-text" id="fNameError"></span>
+          </div>
+          <div class="field">
+            <label for="fEmail">Email address</label>
+            <input type="email" id="fEmail">
+            <span class="error-text" id="fEmailError"></span>
+          </div>
+          <div class="field">
+            <label for="fPassword">Password</label>
+            <input type="password" id="fPassword" autocomplete="new-password">
+            <span class="hint" id="fPasswordHint"></span>
+            <span class="error-text" id="fPasswordError"></span>
+          </div>
+          <div class="field">
+            <label for="fRole">Role</label>
+            <select id="fRole">
+              <option value="voter">Voter</option>
+              <option value="creator">Poll Creator</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fStatus">Account status</label>
+            <select id="fStatus">
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+          <div class="modal-actions">
+            <button class="btn" type="button" id="cancelUser">Cancel</button>
+            <button class="btn btn-primary" type="submit">Save User</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <address>
+      <strong>VoteSphere</strong> &ndash; CSE326 web development project by Team Ignite.
+      Questions? <a href="mailto:support@votesphere.demo" title="Send us an email">support@votesphere.demo</a>
+    </address>
+    <small>Built with <abbr title="HyperText Markup Language">HTML5</abbr>,
+      <abbr title="Cascading Style Sheets">CSS3</abbr> and vanilla JavaScript.
+      Demonstration only &ndash; browser storage is not secure for real elections.</small>
+  </footer>
+
+  <!-- common.js has the shared functions; users.js has this page's own code -->
+  <script src="js/common.js"></script>
+  <script src="js/users.js"></script>
+</body>
+</html>

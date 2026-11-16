@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Metadata: not shown on the page, but used by the browser and search engines -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse, search and filter every poll on VoteSphere.">
+  <meta name="keywords" content="VoteSphere, online polling, voting system, HTML, CSS, JavaScript">
+  <meta name="author" content="Team Ignite - CSE326">
+  <title>All Polls | VoteSphere</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="polls.css">
+</head>
+<body class="app">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ===== Sidebar navigation (links are hidden by JavaScript if the role may not use them) ===== -->
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="dashboard.html">
+      <img src="assets/favicon.svg" alt="VoteSphere logo" width="34" height="34">
+      <span>VoteSphere</span>
+    </a>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li data-roles="admin creator voter"><a href="dashboard.html">Dashboard</a></li>
+          <li data-roles="admin creator voter"><a href="polls.html">All Polls</a></li>
+          <li data-roles="admin creator"><a href="create-poll.html">Create Poll</a></li>
+          <li data-roles="admin creator voter"><a href="results.html">Results</a></li>
+          <li data-roles="admin"><a href="users.html">User Management</a></li>
+          <li data-roles="admin creator"><a href="reports.html">Reports</a></li>
+          <li><a href="index.html" id="logoutLink">Logout</a></li>
+        </ul>
+      </nav>
+    <p class="sidebar-note"><small>College demo prototype.<br>Not for real elections.</small></p>
+  </aside>
+
+  <!-- ===== Top bar ===== -->
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
+    <span class="crumb">All Polls</span>
+    <div class="topbar-user">
+      <span id="userName"></span>
+      <span class="role-badge" id="userRole"></span>
+    </div>
+  </header>
+
+  <!-- ===== Main content of this page ===== -->
+  <main class="content" id="main">
+
+    <header class="page-header">
+      <div>
+        <h1>All Polls</h1>
+        <p>Browse polls, cast your vote or check the results.</p>
+      </div>
+      <a class="btn btn-primary" href="create-poll.html" data-roles="admin creator">+ Create Poll</a>
+    </header>
+
+    <!-- Search and filters -->
+    <section class="card toolbar" aria-label="Search and filters">
+      <div class="field">
+        <label for="searchInput">Search polls</label>
+        <input type="search" id="searchInput" placeholder="Search by title or description">
+      </div>
+      <div class="field">
+        <label for="categoryFilter">Category</label>
+        <select id="categoryFilter">
+          <option value="all">All categories</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="statusFilter">Status</label>
+        <select id="statusFilter">
+          <option value="all">All statuses</option>
+          <option value="Active">Active</option>
+          <option value="Upcoming">Upcoming</option>
+          <option value="Closed">Closed</option>
+        </select>
+      </div>
+      <button class="btn" type="button" id="clearFilters">Reset</button>
+    </section>
+
+    <p class="result-count" id="resultCount" aria-live="polite"></p>
+
+    <!-- Poll cards are inserted here by polls.js -->
+    <section class="poll-grid" id="pollGrid" aria-label="Poll list"></section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <address>
+      <strong>VoteSphere</strong> &ndash; CSE326 web development project by Team Ignite.
+      Questions? <a href="mailto:support@votesphere.demo" title="Send us an email">support@votesphere.demo</a>
+    </address>
+    <small>Built with <abbr title="HyperText Markup Language">HTML5</abbr>,
+      <abbr title="Cascading Style Sheets">CSS3</abbr> and vanilla JavaScript.
+      Demonstration only &ndash; browser storage is not secure for real elections.</small>
+  </footer>
+
+  <!-- common.js has the shared functions; polls.js has this page's own code -->
+  <script src="js/common.js"></script>
+  <script src="js/polls.js"></script>
+</body>
+</html>

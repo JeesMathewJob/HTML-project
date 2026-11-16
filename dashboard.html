@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Metadata: not shown on the page, but used by the browser and search engines -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="VoteSphere dashboard with poll statistics, recent polls and activity.">
+  <meta name="keywords" content="VoteSphere, online polling, voting system, HTML, CSS, JavaScript">
+  <meta name="author" content="Team Ignite - CSE326">
+  <title>Dashboard | VoteSphere</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="app">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ===== Sidebar navigation (links are hidden by JavaScript if the role may not use them) ===== -->
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="dashboard.html">
+      <img src="assets/favicon.svg" alt="VoteSphere logo" width="34" height="34">
+      <span>VoteSphere</span>
+    </a>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li data-roles="admin creator voter"><a href="dashboard.html">Dashboard</a></li>
+          <li data-roles="admin creator voter"><a href="polls.html">All Polls</a></li>
+          <li data-roles="admin creator"><a href="create-poll.html">Create Poll</a></li>
+          <li data-roles="admin creator voter"><a href="results.html">Results</a></li>
+          <li data-roles="admin"><a href="users.html">User Management</a></li>
+          <li data-roles="admin creator"><a href="reports.html">Reports</a></li>
+          <li><a href="index.html" id="logoutLink">Logout</a></li>
+        </ul>
+      </nav>
+    <p class="sidebar-note"><small>College demo prototype.<br>Not for real elections.</small></p>
+  </aside>
+
+  <!-- ===== Top bar ===== -->
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
+    <span class="crumb">Dashboard</span>
+    <div class="topbar-user">
+      <span id="userName"></span>
+      <span class="role-badge" id="userRole"></span>
+    </div>
+  </header>
+
+  <!-- ===== Main content of this page ===== -->
+  <main class="content" id="main">
+
+    <!-- Welcome banner -->
+    <section class="welcome" aria-labelledby="welcomeTitle">
+      <h1 id="welcomeTitle">Welcome back!</h1>
+      <p id="welcomeText"></p>
+      <p><q>Every vote counts, every voice matters.</q></p>
+    </section>
+
+    <!-- Statistic cards -->
+    <section class="stat-grid" aria-label="Statistics">
+      <article class="card stat-card">
+        <h2>Total Polls</h2>
+        <p class="stat-number" id="statPolls">0</p>
+        <small>Created on the platform</small>
+      </article>
+      <article class="card stat-card">
+        <h2>Total Votes</h2>
+        <p class="stat-number" id="statVotes">0</p>
+        <small>Received so far</small>
+      </article>
+      <article class="card stat-card">
+        <h2>Active Polls</h2>
+        <p class="stat-number" id="statActive">0</p>
+        <small>Open for voting now</small>
+      </article>
+      <article class="card stat-card">
+        <h2 id="statFourthLabel">Registered Users</h2>
+        <p class="stat-number" id="statFourth">0</p>
+        <small>Based on your role</small>
+      </article>
+    </section>
+
+    <div class="dash-columns">
+      <section class="card" aria-labelledby="recentHeading">
+        <h2 id="recentHeading">Recent Polls</h2>
+        <ol class="recent-list" id="recentPolls"></ol>
+        <a class="btn btn-sm" href="polls.html">View all polls</a>
+      </section>
+
+      <section class="card" aria-labelledby="activityHeading">
+        <h2 id="activityHeading">Recent Activity</h2>
+        <ul class="activity-list" id="recentActivity"></ul>
+      </section>
+    </div>
+
+    <!-- Quick navigation shortcuts (only the ones allowed for the role are shown) -->
+    <section class="card quick" aria-labelledby="quickHeading">
+      <h2 id="quickHeading">Quick Navigation</h2>
+      <div class="shortcut-grid">
+        <a class="shortcut" href="polls.html" data-roles="admin creator voter">Browse Polls<small>Find a poll and vote</small></a>
+        <a class="shortcut" href="create-poll.html" data-roles="admin creator">Create a Poll<small>Publish a new question</small></a>
+        <a class="shortcut" href="results.html" data-roles="admin creator voter">View Results<small>See how votes are going</small></a>
+        <a class="shortcut" href="users.html" data-roles="admin">Manage Users<small>Add, edit or remove users</small></a>
+        <a class="shortcut" href="reports.html" data-roles="admin creator">Open Reports<small>Charts and summaries</small></a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <address>
+      <strong>VoteSphere</strong> &ndash; CSE326 web development project by Team Ignite.
+      Questions? <a href="mailto:support@votesphere.demo" title="Send us an email">support@votesphere.demo</a>
+    </address>
+    <small>Built with <abbr title="HyperText Markup Language">HTML5</abbr>,
+      <abbr title="Cascading Style Sheets">CSS3</abbr> and vanilla JavaScript.
+      Demonstration only &ndash; browser storage is not secure for real elections.</small>
+  </footer>
+
+  <!-- common.js has the shared functions; dashboard.js has this page's own code -->
+  <script src="js/common.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

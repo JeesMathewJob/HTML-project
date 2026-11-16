@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Metadata: not shown on the page, but used by the browser and search engines -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create and publish a new poll on VoteSphere.">
+  <meta name="keywords" content="VoteSphere, online polling, voting system, HTML, CSS, JavaScript">
+  <meta name="author" content="Team Ignite - CSE326">
+  <title>Create Poll | VoteSphere</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="create-poll.css">
+</head>
+<body class="app">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ===== Sidebar navigation (links are hidden by JavaScript if the role may not use them) ===== -->
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="dashboard.html">
+      <img src="assets/favicon.svg" alt="VoteSphere logo" width="34" height="34">
+      <span>VoteSphere</span>
+    </a>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li data-roles="admin creator voter"><a href="dashboard.html">Dashboard</a></li>
+          <li data-roles="admin creator voter"><a href="polls.html">All Polls</a></li>
+          <li data-roles="admin creator"><a href="create-poll.html">Create Poll</a></li>
+          <li data-roles="admin creator voter"><a href="results.html">Results</a></li>
+          <li data-roles="admin"><a href="users.html">User Management</a></li>
+          <li data-roles="admin creator"><a href="reports.html">Reports</a></li>
+          <li><a href="index.html" id="logoutLink">Logout</a></li>
+        </ul>
+      </nav>
+    <p class="sidebar-note"><small>College demo prototype.<br>Not for real elections.</small></p>
+  </aside>
+
+  <!-- ===== Top bar ===== -->
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
+    <span class="crumb">Create Poll</span>
+    <div class="topbar-user">
+      <span id="userName"></span>
+      <span class="role-badge" id="userRole"></span>
+    </div>
+  </header>
+
+  <!-- ===== Main content of this page ===== -->
+  <main class="content" id="main">
+
+    <header class="page-header">
+      <div>
+        <h1 id="pageHeading">Create Poll</h1>
+        <p id="pageIntro">Fill in the details below and publish your poll for voters.</p>
+      </div>
+    </header>
+
+    <!-- Confirmation message (shown after publishing) -->
+    <section class="success-box" id="successBox" role="status" hidden>
+      <h2>Success!</h2>
+      <p id="successText"></p>
+      <div class="form-actions">
+        <a class="btn btn-primary btn-sm" href="polls.html">View All Polls</a>
+        <a class="btn btn-sm" href="create-poll.html">Create Another</a>
+      </div>
+    </section>
+
+    <div class="form-layout">
+      <form class="card" id="pollForm" novalidate>
+        <div class="field">
+          <label for="pollTitle">Poll title (the question)</label>
+          <input type="text" id="pollTitle" maxlength="120" placeholder="e.g. Which day should we hold the Sports Day?">
+          <span class="error-text" id="pollTitleError"></span>
+        </div>
+
+        <div class="field">
+          <label for="pollDescription">Description</label>
+          <textarea id="pollDescription" maxlength="400" placeholder="Explain what the poll is about"></textarea>
+          <span class="error-text" id="pollDescriptionError"></span>
+        </div>
+
+        <div class="field">
+          <label for="pollCategory">Category</label>
+          <select id="pollCategory">
+            <option value="">Choose a category</option>
+          </select>
+          <span class="error-text" id="pollCategoryError"></span>
+        </div>
+
+        <div class="two-col">
+          <div class="field">
+            <label for="startDate">Voting opens</label>
+            <input type="date" id="startDate">
+            <span class="error-text" id="startDateError"></span>
+          </div>
+          <div class="field">
+            <label for="deadline">Voting deadline</label>
+            <input type="date" id="deadline">
+            <span class="error-text" id="deadlineError"></span>
+          </div>
+        </div>
+
+        <fieldset>
+          <legend>Voting options</legend>
+          <ol class="options-list" id="optionsList"></ol>
+          <span class="error-text" id="optionsError"></span>
+          <button class="btn btn-sm" type="button" id="addOptionBtn">+ Add option</button>
+        </fieldset>
+
+        <fieldset class="visibility">
+          <legend>Result visibility</legend>
+          <label>
+            <input type="radio" name="visibility" value="public" checked>
+            <span><strong>Public</strong> Everyone can view the results.</span>
+          </label>
+          <label>
+            <input type="radio" name="visibility" value="restricted">
+            <span><strong>Restricted</strong> Only admins and poll creators can view the results.</span>
+          </label>
+        </fieldset>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit" id="publishBtn">Publish Poll</button>
+          <button class="btn" type="button" id="clearBtn">Clear Form</button>
+        </div>
+      </form>
+
+      <!-- Tips -->
+      <aside class="card tips" aria-labelledby="tipsHeading">
+        <h2 id="tipsHeading">Tips for a good poll</h2>
+        <ul>
+          <li>Write the title as a <b>clear question</b>.</li>
+          <li>Keep options <i>short</i> and different from each other.</li>
+          <li>Add between 2 and 8 options.</li>
+          <li>Polls show as <strong>Upcoming</strong> before the opening date and <strong>Closed</strong> after the deadline.</li>
+        </ul>
+        <p>Polls you publish appear on the All Polls page straight away.</p>
+      </aside>
+    </div>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <address>
+      <strong>VoteSphere</strong> &ndash; CSE326 web development project by Team Ignite.
+      Questions? <a href="mailto:support@votesphere.demo" title="Send us an email">support@votesphere.demo</a>
+    </address>
+    <small>Built with <abbr title="HyperText Markup Language">HTML5</abbr>,
+      <abbr title="Cascading Style Sheets">CSS3</abbr> and vanilla JavaScript.
+      Demonstration only &ndash; browser storage is not secure for real elections.</small>
+  </footer>
+
+  <!-- common.js has the shared functions; create-poll.js has this page's own code -->
+  <script src="js/common.js"></script>
+  <script src="js/create-poll.js"></script>
+</body>
+</html>

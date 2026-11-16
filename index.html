@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Metadata: not shown on the page, but used by the browser and search engines -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sign in to VoteSphere, a role-based online polling and voting system (college prototype).">
+  <meta name="keywords" content="VoteSphere, online polling, voting system, login, HTML, CSS, JavaScript">
+  <meta name="author" content="Team Ignite - CSE326">
+  <title>Sign in | VoteSphere</title>
+  <!-- Favicon: small icon shown in the browser tab -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <!-- External CSS file for this page -->
+  <link rel="stylesheet" href="login.css">
+</head>
+<body class="login-body">
+  <a class="skip-link" href="#loginMain">Skip to sign-in form</a>
+
+  <main class="login-layout">
+
+    <!-- ===== Left: introduction panel ===== -->
+    <section class="login-hero" aria-label="About VoteSphere">
+      <div class="hero-brand">
+        <!-- Inline SVG logo made with rect, circle and polyline shapes -->
+        <svg width="54" height="54" viewBox="0 0 64 64" role="img" aria-label="VoteSphere logo">
+          <rect width="64" height="64" rx="14" fill="#C6A75E"/>
+          <circle cx="32" cy="32" r="18" fill="none" stroke="#1F2A44" stroke-width="4"/>
+          <polyline points="23,32 30,39 42,25" fill="none" stroke="#1F2A44" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1>VoteSphere</h1>
+      </div>
+      <p class="hero-tag">Online Polling and Voting System</p>
+
+      <blockquote cite="https://www.example.edu/votesphere">
+        <p>A vote is a small action with a <em>big</em> voice.</p>
+        <footer>&mdash; <cite>The VoteSphere motto</cite></footer>
+      </blockquote>
+
+      <!-- Illustration: SVG rect, line, circle and text elements -->
+      <figure class="hero-figure">
+        <svg viewBox="0 0 340 170" role="img" aria-label="Small bar chart showing poll results">
+          <line x1="20" y1="140" x2="320" y2="140" stroke="#E8DCC8" stroke-width="2"/>
+          <rect x="40" y="70" width="50" height="70" rx="5" fill="#E8DCC8"/>
+          <rect x="120" y="30" width="50" height="110" rx="5" fill="#C6A75E"/>
+          <rect x="200" y="90" width="50" height="50" rx="5" fill="#E8DCC8"/>
+          <circle cx="295" cy="40" r="16" fill="none" stroke="#C6A75E" stroke-width="3"/>
+          <text x="40" y="160" fill="#E8DCC8" font-size="12">Option A</text>
+          <text x="120" y="160" fill="#E8DCC8" font-size="12">Option B</text>
+          <text x="200" y="160" fill="#E8DCC8" font-size="12">Option C</text>
+          <text x="295" y="45" text-anchor="middle" fill="#C6A75E" font-size="14" font-weight="bold">%</text>
+        </svg>
+        <figcaption>Live results, updated as votes arrive.</figcaption>
+      </figure>
+
+      <ol class="hero-steps">
+        <li>Sign in with your role</li>
+        <li>Browse the polls</li>
+        <li>Cast one vote per poll</li>
+        <li>Watch results update</li>
+      </ol>
+    </section>
+
+    <!-- ===== Right: sign-in card ===== -->
+    <section class="login-panel" id="loginMain">
+      <article class="card login-card">
+        <header>
+          <h2 id="formHeading">Welcome back</h2>
+          <p id="formIntro">Sign in to continue to your dashboard.</p>
+        </header>
+
+        <p class="notice notice-success" id="formSuccess" role="status" hidden></p>
+
+        <!-- LOGIN FORM -->
+        <form id="loginForm" novalidate>
+          <p class="notice notice-error" id="formError" role="alert" hidden></p>
+
+          <div class="field">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="you@votesphere.demo" autocomplete="username">
+            <span class="error-text" id="emailError"></span>
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="current-password">
+            <span class="error-text" id="passwordError"></span>
+          </div>
+
+          <div class="row-between">
+            <label class="check"><input type="checkbox" id="showPassword"> Show password</label>
+            <label class="check"><input type="checkbox" id="remember"> Remember me</label>
+          </div>
+
+          <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+
+        <!-- REGISTER FORM (hidden until "Create an account" is clicked) -->
+        <form id="registerForm" novalidate hidden>
+          <div class="field">
+            <label for="regName">Full name</label>
+            <input type="text" id="regName" autocomplete="name">
+            <span class="error-text" id="regNameError"></span>
+          </div>
+          <div class="field">
+            <label for="regEmail">Email address</label>
+            <input type="email" id="regEmail" autocomplete="email">
+            <span class="error-text" id="regEmailError"></span>
+          </div>
+          <div class="field">
+            <label for="regPassword">Password</label>
+            <input type="password" id="regPassword" autocomplete="new-password">
+            <span class="error-text" id="regPasswordError"></span>
+          </div>
+          <div class="field">
+            <label for="regConfirm">Confirm password</label>
+            <input type="password" id="regConfirm" autocomplete="new-password">
+            <span class="error-text" id="regConfirmError"></span>
+          </div>
+          <div class="row-between">
+            <label class="check"><input type="checkbox" id="showRegPassword"> Show passwords</label>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit">Create account</button>
+        </form>
+
+        <p class="switch-text" id="switchText">New here? <a href="#registerForm" id="showRegister">Create an account</a></p>
+        <p class="switch-text" id="backText" hidden><a href="#loginForm" id="backToLogin">&larr; Back to sign in</a></p>
+
+        <!-- Demo accounts (a table with caption, thead and tbody) -->
+        <details class="demo-details">
+          <summary>Demo accounts</summary>
+          <table class="demo-table">
+            <caption>Password for all accounts: <code>demo123</code></caption>
+            <thead>
+              <tr><th>Role</th><th>Email</th><th>Fill</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Admin</td>
+                <td>admin@votesphere.demo</td>
+                <td><button class="fill-btn" type="button" data-email="admin@votesphere.demo">Use</button></td>
+              </tr>
+              <tr>
+                <td>Poll Creator</td>
+                <td>creator@votesphere.demo</td>
+                <td><button class="fill-btn" type="button" data-email="creator@votesphere.demo">Use</button></td>
+              </tr>
+              <tr>
+                <td>Voter</td>
+                <td>voter@votesphere.demo</td>
+                <td><button class="fill-btn" type="button" data-email="voter@votesphere.demo">Use</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- Security explanation -->
+        <aside class="security-note" aria-label="Security notice">
+          <p><strong>Demonstration only.</strong> This is a front-end college prototype.
+            Users, polls and votes are kept in your browser, so anyone can read or change them with the developer tools.
+            <del>Production-ready election system</del> <ins>College prototype</ins> &ndash;
+            <mark>do not use it for real elections.</mark></p>
+          <details>
+            <summary>Where is my data stored?</summary>
+<pre><code>users, polls, votes  -> localStorage
+login session        -> sessionStorage
+remembered email     -> localStorage</code></pre>
+            <p><small>Real systems need a server, a database and hashed passwords.</small></p>
+          </details>
+          <button class="reset-link" type="button" id="resetDemo">Reset demo data</button>
+        </aside>
+      </article>
+    </section>
+  </main>
+
+  <footer class="login-footer">
+    <address>
+      <strong>VoteSphere</strong> &ndash; CSE326 project by Team Ignite &middot;
+      <a href="mailto:support@votesphere.demo" title="Send us an email">support@votesphere.demo</a>
+    </address>
+    <small>Built with <abbr title="HyperText Markup Language">HTML5</abbr>,
+      <abbr title="Cascading Style Sheets">CSS3</abbr> and vanilla JavaScript.
+      Learn more at <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener" title="Opens in a new tab">MDN Web Docs</a>.</small>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

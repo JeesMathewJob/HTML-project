@@ -1,0 +1,819 @@
+/* ==========================================================================
+   BASE STYLES  (variables, reset, buttons, forms, badges, toast)
+   This block appears at the top of every page's own CSS file so that each
+   page stays independent. Page-specific styles come after it.
+
+   COLOUR PALETTE
+   Navy #1F2A44  |  Warm Beige #E8DCC8  |  Soft Gold #C6A75E
+   White #FFFFFF |  Light background #FBFAF7
+   ========================================================================== */
+
+/* 1. CSS variables (custom properties) - change a colour once, it updates everywhere */
+:root {
+  --navy: #1F2A44;
+  --beige: #E8DCC8;
+  --gold: #C6A75E;
+  --white: #FFFFFF;
+  --light: #FBFAF7;
+  --muted: hsl(222, 15%, 38%);           /* colour written in HSL */
+  --danger: rgb(166, 61, 61);            /* colour written in RGB */
+  --line: rgba(31, 42, 68, 0.3);         /* input borders */
+  --radius: 10px;
+  --shadow: 0 2px 8px rgba(31, 42, 68, 0.08);
+  --shadow-hover: 0 8px 20px rgba(31, 42, 68, 0.15);
+}
+
+/* 2. Reset - universal selector (*) */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;      /* padding and border are included in width/height */
+}
+
+/* Attribute selector: anything with the "hidden" attribute stays hidden */
+[hidden] {
+  display: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 1rem;                       /* rem unit */
+  line-height: 1.6;
+  color: var(--navy);
+  background-color: var(--light);
+}
+
+/* Grouping selector: one rule for several elements */
+h1, h2, h3, h4 {
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.25;
+}
+
+a {
+  color: var(--navy);
+}
+
+a:hover {
+  text-decoration-color: var(--gold);
+  text-decoration-thickness: 2px;
+}
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+mark {
+  padding: 0 0.25em;
+  border-radius: 3px;
+  background-color: rgba(198, 167, 94, 0.45);   /* soft gold highlight instead of bright yellow */
+  color: var(--navy);
+}
+
+code {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.9em;
+  background-color: var(--beige);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+}
+
+pre {
+  background-color: var(--navy);
+  color: var(--beige);
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.85rem;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+/* 3. Buttons (.btn is a class, used together with modifier classes) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.15rem;
+  border: 1px solid var(--navy);
+  border-radius: 8px;
+  background-color: var(--white);
+  color: var(--navy);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, transform 0.15s;
+}
+
+.btn:hover {
+  background-color: var(--beige);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background-color: var(--navy);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background-color: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+}
+
+.btn-danger {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.btn-danger:hover {
+  background-color: var(--danger);
+  color: var(--white);
+}
+
+.btn-sm {
+  padding: 0.35rem 0.8rem;
+  font-size: 0.875rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn:disabled,
+.btn:disabled:hover {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  background-color: var(--light);
+  color: var(--navy);
+  border-color: var(--line);
+}
+
+/* 4. Forms */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+label,
+legend {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  background-color: var(--white);
+  color: var(--navy);
+  font: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(198, 167, 94, 0.35);
+}
+
+input.invalid,
+select.invalid,
+textarea.invalid {
+  border-color: var(--danger);
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: var(--navy);
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.error-text {
+  color: var(--danger);
+  font-size: 0.85rem;
+  min-height: 1.2em;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* 5. Notices, badges, cards */
+.notice {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--gold);
+  border-radius: 8px;
+  background-color: var(--beige);
+}
+
+.notice-error {
+  border-left-color: var(--danger);
+  background-color: rgba(166, 61, 61, 0.1);
+}
+
+.notice-success {
+  border-left-color: var(--navy);
+  background-color: rgba(198, 167, 94, 0.25);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.1rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge-active {
+  background-color: var(--navy);
+  color: var(--white);
+}
+
+.badge-upcoming {
+  background-color: var(--gold);
+  color: var(--navy);
+}
+
+.badge-closed {
+  background-color: var(--beige);
+  color: var(--navy);
+}
+
+.card {
+  background-color: var(--white);
+  border: 1px solid var(--beige);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+}
+
+/* 6. Toast messages (created by showToast() in common.js) */
+#toastBox {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: calc(100vw - 2rem);
+}
+
+.toast {
+  padding: 0.75rem 1.1rem;
+  border-left: 4px solid var(--gold);
+  border-radius: 8px;
+  background-color: var(--navy);
+  color: var(--white);
+  box-shadow: var(--shadow-hover);
+  animation: toastIn 0.3s ease;
+}
+
+.toast-error {
+  border-left-color: var(--danger);
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Respect visitors who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   APP LAYOUT  (sidebar, top bar, content area, footer, tables)
+   Shared by every page after login. Uses CSS Grid for the page frame and
+   Flexbox inside the sidebar and top bar.
+   ========================================================================== */
+
+:root {
+  --sidebar-width: 245px;
+}
+
+/* Page frame: sidebar on the left, top bar + content + footer on the right */
+body.app {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "side top"
+    "side main"
+    "side foot";
+  min-height: 100vh;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 2000;
+  padding: 0.5rem 1rem;
+  background-color: var(--gold);
+  color: var(--navy);
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+/* ----- Sidebar (navy) ----- */
+.sidebar {
+  grid-area: side;
+  position: sticky;                 /* stays in view while the page scrolls */
+  top: 0;
+  height: 100vh;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 0;
+  background-color: var(--navy);
+  color: var(--white);
+  overflow-y: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0 1.25rem 1.25rem;
+  border-bottom: 1px solid rgba(232, 220, 200, 0.2);
+  color: var(--white);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.brand:hover {
+  color: var(--gold);
+}
+
+.sidebar nav {
+  flex: 1;
+  padding: 1rem 0.75rem;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li + li {
+  margin-top: 0.2rem;
+}
+
+.sidebar nav a {
+  display: block;
+  padding: 0.65rem 1rem;
+  border-left: 3px solid transparent;
+  border-radius: 8px;
+  color: var(--beige);
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.sidebar nav a:hover,
+.sidebar nav a:focus {
+  background-color: rgba(232, 220, 200, 0.12);
+  color: var(--white);
+}
+
+.sidebar nav a.active {
+  border-left-color: var(--gold);
+  background-color: rgba(198, 167, 94, 0.18);
+  color: var(--gold);
+}
+
+.sidebar-note {
+  padding: 0 1.25rem;
+  color: var(--beige);
+  opacity: 0.75;
+}
+
+/* ----- Top bar ----- */
+.topbar {
+  grid-area: top;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1.75rem;
+  background-color: var(--white);
+  border-bottom: 1px solid var(--beige);
+}
+
+.menu-btn {
+  display: none;                    /* only shown on small screens */
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--navy);
+  border-radius: 8px;
+  background-color: var(--white);
+  color: var(--navy);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.crumb {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-left: auto;
+}
+
+#userName {
+  font-weight: 600;
+}
+
+.role-badge {
+  padding: 0.15rem 0.7rem;
+  border-radius: 999px;
+  background-color: var(--beige);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* ----- Content + footer ----- */
+.content {
+  grid-area: main;
+  width: 100%;
+  min-width: 0;                     /* lets wide tables scroll instead of stretching the page */
+  max-width: 1200px;
+  padding: 1.75rem;
+}
+
+.footer {
+  grid-area: foot;
+  padding: 1rem 1.75rem;
+  border-top: 1px solid var(--beige);
+  background-color: var(--white);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.footer address {
+  font-style: normal;               /* browsers show address in italics by default */
+}
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.page-header h1 {
+  font-size: 1.8rem;
+}
+
+.page-header p {
+  color: var(--muted);
+}
+
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* ----- Tables ----- */
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+caption {
+  padding-bottom: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+th,
+td {
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--beige);
+  text-align: left;
+}
+
+thead th {
+  background-color: var(--navy);
+  color: var(--white);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+thead th[colspan] {
+  text-align: center;
+}
+
+tbody tr:nth-child(even) {
+  background-color: var(--light);
+}
+
+tbody tr:hover {
+  background-color: rgba(232, 220, 200, 0.45);
+}
+
+tfoot td {
+  background-color: var(--beige);
+  font-weight: 600;
+}
+
+/* ----- Small screens: sidebar slides in from the left ----- */
+@media (max-width: 900px) {
+  body.app {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "top"
+      "main"
+      "foot";
+  }
+
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .menu-btn {
+    display: inline-block;
+  }
+}
+
+@media (max-width: 600px) {
+  .topbar,
+  .content,
+  .footer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  #userName {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   VOTING PAGE  (vote.html)
+   Simple layout: the ballot on the left, guidance on the right.
+   ========================================================================== */
+
+.vote-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.vote-card header {
+  margin-bottom: 1rem;
+}
+
+.eyebrow {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.vote-card h1 {
+  margin: 0.2rem 0 0.5rem;
+  font-size: 1.8rem;
+}
+
+.lead {
+  color: var(--muted);
+}
+
+.poll-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 2rem;
+  margin-bottom: 1.25rem;
+  padding: 0.8rem 0;
+  border-top: 1px solid var(--beige);
+  border-bottom: 1px solid var(--beige);
+}
+
+.poll-info dt {
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.poll-info dd {
+  font-weight: 600;
+}
+
+fieldset {
+  margin-bottom: 0.5rem;
+  border: none;
+}
+
+legend {
+  margin-bottom: 0.6rem;
+  font-size: 1.05rem;
+}
+
+/* Radio choices: the whole row is clickable */
+.option-choice {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.6rem;
+  padding: 0.9rem 1rem;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.option-choice:hover {
+  border-color: var(--gold);
+  background-color: var(--light);
+}
+
+.option-choice:focus-within {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(198, 167, 94, 0.35);
+}
+
+.option-choice input:checked + span {
+  font-weight: 700;
+}
+
+.option-choice input:checked + span::after {
+  content: "  \2713";                      /* check mark */
+  color: var(--gold);
+}
+
+.option-choice input:disabled + span {
+  color: var(--muted);
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* Confirmation message after voting */
+.confirm-box {
+  padding: 1.5rem 0.5rem;
+  text-align: center;
+}
+
+.confirm-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  background-color: var(--gold);
+  color: var(--navy);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.confirm-box h2 {
+  margin-bottom: 0.4rem;
+}
+
+.confirm-box .form-actions {
+  justify-content: center;
+}
+
+/* Side guidance card */
+.guide h2 {
+  margin-bottom: 0.7rem;
+  font-size: 1.15rem;
+}
+
+.guide ol {
+  padding-left: 1.3rem;
+}
+
+.guide li {
+  margin-bottom: 0.4rem;
+}
+
+.guide details {
+  margin: 0.8rem 0;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--beige);
+  border-radius: 8px;
+}
+
+.guide summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.guide dt {
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+.guide dd {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.guide dfn {
+  font-style: normal;
+  border-bottom: 2px solid var(--gold);
+}
+
+#notFound h1 {
+  margin-bottom: 0.5rem;
+}
+
+#notFound .btn {
+  margin-top: 1rem;
+}
+
+@media (max-width: 900px) {
+  .vote-layout {
+    grid-template-columns: 1fr;
+  }
+}

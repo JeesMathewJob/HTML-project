@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Metadata: not shown on the page, but used by the browser and search engines -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="See live voting results with percentages and progress bars.">
+  <meta name="keywords" content="VoteSphere, online polling, voting system, HTML, CSS, JavaScript">
+  <meta name="author" content="Team Ignite - CSE326">
+  <title>Results | VoteSphere</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="results.css">
+</head>
+<body class="app">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ===== Sidebar navigation (links are hidden by JavaScript if the role may not use them) ===== -->
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="dashboard.html">
+      <img src="assets/favicon.svg" alt="VoteSphere logo" width="34" height="34">
+      <span>VoteSphere</span>
+    </a>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li data-roles="admin creator voter"><a href="dashboard.html">Dashboard</a></li>
+          <li data-roles="admin creator voter"><a href="polls.html">All Polls</a></li>
+          <li data-roles="admin creator"><a href="create-poll.html">Create Poll</a></li>
+          <li data-roles="admin creator voter"><a href="results.html">Results</a></li>
+          <li data-roles="admin"><a href="users.html">User Management</a></li>
+          <li data-roles="admin creator"><a href="reports.html">Reports</a></li>
+          <li><a href="index.html" id="logoutLink">Logout</a></li>
+        </ul>
+      </nav>
+    <p class="sidebar-note"><small>College demo prototype.<br>Not for real elections.</small></p>
+  </aside>
+
+  <!-- ===== Top bar ===== -->
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
+    <span class="crumb">Results</span>
+    <div class="topbar-user">
+      <span id="userName"></span>
+      <span class="role-badge" id="userRole"></span>
+    </div>
+  </header>
+
+  <!-- ===== Main content of this page ===== -->
+  <main class="content" id="main">
+
+    <header class="page-header">
+      <div>
+        <h1>Results</h1>
+        <p>Choose a poll to see how people voted. The page updates automatically.</p>
+      </div>
+      <div class="field select-field">
+        <label for="pollSelect">Select a poll</label>
+        <select id="pollSelect"></select>
+      </div>
+    </header>
+
+    <p class="notice notice-error" id="restrictedMsg" role="alert" hidden>
+      The results of that poll are restricted. Please choose one of the polls from the list.
+    </p>
+
+    <p class="card empty" id="noPolls" hidden>There are no polls with visible results yet.</p>
+
+    <section id="resultsPanel" aria-live="polite" hidden>
+      <article class="card">
+        <h2 id="resultTitle"></h2>
+        <p id="resultDesc"></p>
+        <dl class="summary-grid">
+          <div class="mini-stat"><dt>Total votes</dt><dd id="totalVotes">0</dd></div>
+          <div class="mini-stat"><dt>Options</dt><dd id="optionCount">0</dd></div>
+          <div class="mini-stat"><dt>Status</dt><dd class="small-text" id="pollStatus"></dd></div>
+          <div class="mini-stat"><dt>Deadline</dt><dd class="small-text" id="pollDeadline"></dd></div>
+        </dl>
+      </article>
+
+      <article class="card results-card">
+        <h3>Votes received by each option</h3>
+        <ul class="result-list" id="resultList"></ul>
+        <p><small id="updatedText">Results refresh automatically when new votes arrive.</small></p>
+      </article>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <address>
+      <strong>VoteSphere</strong> &ndash; CSE326 web development project by Team Ignite.
+      Questions? <a href="mailto:support@votesphere.demo" title="Send us an email">support@votesphere.demo</a>
+    </address>
+    <small>Built with <abbr title="HyperText Markup Language">HTML5</abbr>,
+      <abbr title="Cascading Style Sheets">CSS3</abbr> and vanilla JavaScript.
+      Demonstration only &ndash; browser storage is not secure for real elections.</small>
+  </footer>
+
+  <!-- common.js has the shared functions; results.js has this page's own code -->
+  <script src="js/common.js"></script>
+  <script src="js/results.js"></script>
+</body>
+</html>

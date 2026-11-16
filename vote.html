@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Metadata: not shown on the page, but used by the browser and search engines -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Choose one option and submit your vote on VoteSphere.">
+  <meta name="keywords" content="VoteSphere, online polling, voting system, HTML, CSS, JavaScript">
+  <meta name="author" content="Team Ignite - CSE326">
+  <title>Cast Your Vote | VoteSphere</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="vote.css">
+</head>
+<body class="app">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ===== Sidebar navigation (links are hidden by JavaScript if the role may not use them) ===== -->
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="dashboard.html">
+      <img src="assets/favicon.svg" alt="VoteSphere logo" width="34" height="34">
+      <span>VoteSphere</span>
+    </a>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li data-roles="admin creator voter"><a href="dashboard.html">Dashboard</a></li>
+          <li data-roles="admin creator voter"><a href="polls.html">All Polls</a></li>
+          <li data-roles="admin creator"><a href="create-poll.html">Create Poll</a></li>
+          <li data-roles="admin creator voter"><a href="results.html">Results</a></li>
+          <li data-roles="admin"><a href="users.html">User Management</a></li>
+          <li data-roles="admin creator"><a href="reports.html">Reports</a></li>
+          <li><a href="index.html" id="logoutLink">Logout</a></li>
+        </ul>
+      </nav>
+    <p class="sidebar-note"><small>College demo prototype.<br>Not for real elections.</small></p>
+  </aside>
+
+  <!-- ===== Top bar ===== -->
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
+    <span class="crumb">Cast Your Vote</span>
+    <div class="topbar-user">
+      <span id="userName"></span>
+      <span class="role-badge" id="userRole"></span>
+    </div>
+  </header>
+
+  <!-- ===== Main content of this page ===== -->
+  <main class="content" id="main">
+
+    <!-- Shown when the poll id in the address is wrong -->
+    <section class="card" id="notFound" hidden>
+      <h1>Poll not found</h1>
+      <p>This poll does not exist or has been deleted.</p>
+      <a class="btn btn-primary" href="polls.html">Back to all polls</a>
+    </section>
+
+    <div class="vote-layout" id="voteLayout" hidden>
+      <article class="card vote-card">
+        <header>
+          <p class="eyebrow" id="pollCategory"></p>
+          <h1 id="pollTitle"></h1>
+          <p class="lead" id="pollDesc"></p>
+        </header>
+
+        <dl class="poll-info" id="pollInfo"></dl>
+
+        <p class="notice notice-error" id="voteNotice" role="alert" hidden></p>
+
+        <form id="voteForm" novalidate>
+          <fieldset>
+            <legend>Choose one option</legend>
+            <div id="optionsBox"></div>
+          </fieldset>
+          <p class="error-text" id="voteError" role="alert"></p>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit" id="submitVote">Submit Vote</button>
+            <a class="btn" href="polls.html">Back to polls</a>
+          </div>
+        </form>
+
+        <!-- Confirmation message after voting -->
+        <div class="confirm-box" id="confirmBox" role="status" hidden>
+          <div class="confirm-icon" aria-hidden="true">&#10003;</div>
+          <h2>Thank you for voting!</h2>
+          <p>Your vote has been recorded. You cannot vote again in this poll.</p>
+          <div class="form-actions">
+            <a class="btn btn-primary" id="resultsLink" href="results.html">View Results</a>
+            <a class="btn" href="polls.html">Back to polls</a>
+          </div>
+        </div>
+      </article>
+
+      <aside class="card guide" aria-labelledby="guideHeading">
+        <h2 id="guideHeading">How voting works</h2>
+        <ol type="1">
+          <li>Read the question and the description.</li>
+          <li>Select <strong>one</strong> option.</li>
+          <li>Press <em>Submit Vote</em>.</li>
+          <li>You get a confirmation message.</li>
+        </ol>
+        <details>
+          <summary>Small glossary</summary>
+          <dl>
+            <dt><dfn>Ballot</dfn></dt>
+            <dd>The form where you choose an option.</dd>
+            <dt><dfn>Deadline</dfn></dt>
+            <dd>The last day on which votes are accepted.</dd>
+          </dl>
+        </details>
+        <p><small>Your vote is saved in this browser for the demo. <mark>Not for real elections.</mark></small></p>
+      </aside>
+    </div>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <address>
+      <strong>VoteSphere</strong> &ndash; CSE326 web development project by Team Ignite.
+      Questions? <a href="mailto:support@votesphere.demo" title="Send us an email">support@votesphere.demo</a>
+    </address>
+    <small>Built with <abbr title="HyperText Markup Language">HTML5</abbr>,
+      <abbr title="Cascading Style Sheets">CSS3</abbr> and vanilla JavaScript.
+      Demonstration only &ndash; browser storage is not secure for real elections.</small>
+  </footer>
+
+  <!-- common.js has the shared functions; vote.js has this page's own code -->
+  <script src="js/common.js"></script>
+  <script src="js/vote.js"></script>
+</body>
+</html>

@@ -1,0 +1,803 @@
+/* ==========================================================================
+   BASE STYLES  (variables, reset, buttons, forms, badges, toast)
+   This block appears at the top of every page's own CSS file so that each
+   page stays independent. Page-specific styles come after it.
+
+   COLOUR PALETTE
+   Navy #1F2A44  |  Warm Beige #E8DCC8  |  Soft Gold #C6A75E
+   White #FFFFFF |  Light background #FBFAF7
+   ========================================================================== */
+
+/* 1. CSS variables (custom properties) - change a colour once, it updates everywhere */
+:root {
+  --navy: #1F2A44;
+  --beige: #E8DCC8;
+  --gold: #C6A75E;
+  --white: #FFFFFF;
+  --light: #FBFAF7;
+  --muted: hsl(222, 15%, 38%);           /* colour written in HSL */
+  --danger: rgb(166, 61, 61);            /* colour written in RGB */
+  --line: rgba(31, 42, 68, 0.3);         /* input borders */
+  --radius: 10px;
+  --shadow: 0 2px 8px rgba(31, 42, 68, 0.08);
+  --shadow-hover: 0 8px 20px rgba(31, 42, 68, 0.15);
+}
+
+/* 2. Reset - universal selector (*) */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;      /* padding and border are included in width/height */
+}
+
+/* Attribute selector: anything with the "hidden" attribute stays hidden */
+[hidden] {
+  display: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 1rem;                       /* rem unit */
+  line-height: 1.6;
+  color: var(--navy);
+  background-color: var(--light);
+}
+
+/* Grouping selector: one rule for several elements */
+h1, h2, h3, h4 {
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.25;
+}
+
+a {
+  color: var(--navy);
+}
+
+a:hover {
+  text-decoration-color: var(--gold);
+  text-decoration-thickness: 2px;
+}
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+mark {
+  padding: 0 0.25em;
+  border-radius: 3px;
+  background-color: rgba(198, 167, 94, 0.45);   /* soft gold highlight instead of bright yellow */
+  color: var(--navy);
+}
+
+code {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.9em;
+  background-color: var(--beige);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+}
+
+pre {
+  background-color: var(--navy);
+  color: var(--beige);
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.85rem;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+/* 3. Buttons (.btn is a class, used together with modifier classes) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.15rem;
+  border: 1px solid var(--navy);
+  border-radius: 8px;
+  background-color: var(--white);
+  color: var(--navy);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, transform 0.15s;
+}
+
+.btn:hover {
+  background-color: var(--beige);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background-color: var(--navy);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background-color: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+}
+
+.btn-danger {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.btn-danger:hover {
+  background-color: var(--danger);
+  color: var(--white);
+}
+
+.btn-sm {
+  padding: 0.35rem 0.8rem;
+  font-size: 0.875rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn:disabled,
+.btn:disabled:hover {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  background-color: var(--light);
+  color: var(--navy);
+  border-color: var(--line);
+}
+
+/* 4. Forms */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+label,
+legend {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  background-color: var(--white);
+  color: var(--navy);
+  font: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(198, 167, 94, 0.35);
+}
+
+input.invalid,
+select.invalid,
+textarea.invalid {
+  border-color: var(--danger);
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: var(--navy);
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.error-text {
+  color: var(--danger);
+  font-size: 0.85rem;
+  min-height: 1.2em;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* 5. Notices, badges, cards */
+.notice {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--gold);
+  border-radius: 8px;
+  background-color: var(--beige);
+}
+
+.notice-error {
+  border-left-color: var(--danger);
+  background-color: rgba(166, 61, 61, 0.1);
+}
+
+.notice-success {
+  border-left-color: var(--navy);
+  background-color: rgba(198, 167, 94, 0.25);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.1rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge-active {
+  background-color: var(--navy);
+  color: var(--white);
+}
+
+.badge-upcoming {
+  background-color: var(--gold);
+  color: var(--navy);
+}
+
+.badge-closed {
+  background-color: var(--beige);
+  color: var(--navy);
+}
+
+.card {
+  background-color: var(--white);
+  border: 1px solid var(--beige);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+}
+
+/* 6. Toast messages (created by showToast() in common.js) */
+#toastBox {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: calc(100vw - 2rem);
+}
+
+.toast {
+  padding: 0.75rem 1.1rem;
+  border-left: 4px solid var(--gold);
+  border-radius: 8px;
+  background-color: var(--navy);
+  color: var(--white);
+  box-shadow: var(--shadow-hover);
+  animation: toastIn 0.3s ease;
+}
+
+.toast-error {
+  border-left-color: var(--danger);
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Respect visitors who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   APP LAYOUT  (sidebar, top bar, content area, footer, tables)
+   Shared by every page after login. Uses CSS Grid for the page frame and
+   Flexbox inside the sidebar and top bar.
+   ========================================================================== */
+
+:root {
+  --sidebar-width: 245px;
+}
+
+/* Page frame: sidebar on the left, top bar + content + footer on the right */
+body.app {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "side top"
+    "side main"
+    "side foot";
+  min-height: 100vh;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 2000;
+  padding: 0.5rem 1rem;
+  background-color: var(--gold);
+  color: var(--navy);
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+/* ----- Sidebar (navy) ----- */
+.sidebar {
+  grid-area: side;
+  position: sticky;                 /* stays in view while the page scrolls */
+  top: 0;
+  height: 100vh;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 0;
+  background-color: var(--navy);
+  color: var(--white);
+  overflow-y: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0 1.25rem 1.25rem;
+  border-bottom: 1px solid rgba(232, 220, 200, 0.2);
+  color: var(--white);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.brand:hover {
+  color: var(--gold);
+}
+
+.sidebar nav {
+  flex: 1;
+  padding: 1rem 0.75rem;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li + li {
+  margin-top: 0.2rem;
+}
+
+.sidebar nav a {
+  display: block;
+  padding: 0.65rem 1rem;
+  border-left: 3px solid transparent;
+  border-radius: 8px;
+  color: var(--beige);
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.sidebar nav a:hover,
+.sidebar nav a:focus {
+  background-color: rgba(232, 220, 200, 0.12);
+  color: var(--white);
+}
+
+.sidebar nav a.active {
+  border-left-color: var(--gold);
+  background-color: rgba(198, 167, 94, 0.18);
+  color: var(--gold);
+}
+
+.sidebar-note {
+  padding: 0 1.25rem;
+  color: var(--beige);
+  opacity: 0.75;
+}
+
+/* ----- Top bar ----- */
+.topbar {
+  grid-area: top;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1.75rem;
+  background-color: var(--white);
+  border-bottom: 1px solid var(--beige);
+}
+
+.menu-btn {
+  display: none;                    /* only shown on small screens */
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--navy);
+  border-radius: 8px;
+  background-color: var(--white);
+  color: var(--navy);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.crumb {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-left: auto;
+}
+
+#userName {
+  font-weight: 600;
+}
+
+.role-badge {
+  padding: 0.15rem 0.7rem;
+  border-radius: 999px;
+  background-color: var(--beige);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* ----- Content + footer ----- */
+.content {
+  grid-area: main;
+  width: 100%;
+  min-width: 0;                     /* lets wide tables scroll instead of stretching the page */
+  max-width: 1200px;
+  padding: 1.75rem;
+}
+
+.footer {
+  grid-area: foot;
+  padding: 1rem 1.75rem;
+  border-top: 1px solid var(--beige);
+  background-color: var(--white);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.footer address {
+  font-style: normal;               /* browsers show address in italics by default */
+}
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.page-header h1 {
+  font-size: 1.8rem;
+}
+
+.page-header p {
+  color: var(--muted);
+}
+
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* ----- Tables ----- */
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+caption {
+  padding-bottom: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+th,
+td {
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--beige);
+  text-align: left;
+}
+
+thead th {
+  background-color: var(--navy);
+  color: var(--white);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+thead th[colspan] {
+  text-align: center;
+}
+
+tbody tr:nth-child(even) {
+  background-color: var(--light);
+}
+
+tbody tr:hover {
+  background-color: rgba(232, 220, 200, 0.45);
+}
+
+tfoot td {
+  background-color: var(--beige);
+  font-weight: 600;
+}
+
+/* ----- Small screens: sidebar slides in from the left ----- */
+@media (max-width: 900px) {
+  body.app {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "top"
+      "main"
+      "foot";
+  }
+
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .menu-btn {
+    display: inline-block;
+  }
+}
+
+@media (max-width: 600px) {
+  .topbar,
+  .content,
+  .footer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  #userName {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   DASHBOARD PAGE  (dashboard.html)
+   ========================================================================== */
+
+/* Welcome banner (navy) */
+.welcome {
+  position: relative;
+  margin-bottom: 1.5rem;
+  padding: 1.75rem;
+  border-radius: var(--radius);
+  background-color: var(--navy);
+  color: var(--white);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.welcome::after {                       /* decorative gold circle (pseudo-element) */
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -40px;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  border: 3px solid rgba(198, 167, 94, 0.55);   /* thin gold ring */
+}
+
+.welcome h1 {
+  margin-bottom: 0.3rem;
+  font-size: 1.9rem;
+}
+
+.welcome p {
+  color: var(--beige);
+}
+
+.welcome q {
+  color: var(--gold);
+  font-style: italic;
+}
+
+/* Statistic cards: Grid with auto-fit columns */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-card {
+  border-top: 4px solid var(--gold);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.stat-card h2 {
+  color: var(--muted);
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stat-number {
+  font-family: Georgia, serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.stat-card small {
+  color: var(--muted);
+}
+
+/* Two columns: recent polls + activity */
+.dash-columns {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.dash-columns h2,
+.quick h2 {
+  margin-bottom: 0.8rem;
+  font-size: 1.25rem;
+}
+
+.recent-list {
+  margin-bottom: 1rem;
+  padding-left: 1.3rem;
+}
+
+.recent-list li {
+  padding: 0.6rem 0;
+  border-bottom: 1px dashed var(--beige);
+}
+
+.recent-list li:last-child {
+  border-bottom: none;
+}
+
+.recent-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.recent-list small,
+.activity-list small {
+  display: block;
+  color: var(--muted);
+}
+
+.activity-list {
+  list-style: none;
+}
+
+.activity-list li {
+  position: relative;
+  padding: 0.5rem 0 0.5rem 1.2rem;
+}
+
+.activity-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1rem;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--gold);
+}
+
+/* Quick navigation shortcuts */
+.shortcut-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.8rem;
+}
+
+.shortcut {
+  display: block;
+  padding: 1rem;
+  border: 1px solid var(--beige);
+  border-radius: 8px;
+  background-color: var(--light);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s, border-color 0.2s, background-color 0.2s;
+}
+
+.shortcut:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold);
+  background-color: var(--white);
+}
+
+.shortcut small {
+  display: block;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+@media (max-width: 900px) {
+  .dash-columns {
+    grid-template-columns: 1fr;
+  }
+}
